@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import './App.css';
 
 // -----------------------------------------------------------------
-// 🚨 (FIXED) This must match your function name: lucky.js
+// Pastikan ini '/api/flip' jika Anda menamai file Anda flip.js
 // -----------------------------------------------------------------
 const BACKEND_URL = '/api/flip';
 // -----------------------------------------------------------------
@@ -32,10 +32,11 @@ function App() {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
+  // --- (FIXED) Default bet diatur kembali ke $0.05 ---
   const [betAmount, setBetAmount] = useState(MIN_BET_USDC.toString());
   
   // Set your app's URL for the share link
-  const APP_URL = "https://x402flip.xyz"; // This is your URL, looks good
+  const APP_URL = "https://x402flip.xyz";
   const TWITTER_SHARE_TEXT = "I just play coinflip on x402! Try your luck!";
 
   // 1. Try to connect wallet on page load
@@ -147,23 +148,22 @@ function App() {
       return;
     }
 
-    // (FIX) Tambahkan pengecekan jaringan di sini
+    // (FIXED) Network check added before signing
     setIsLoading(true);
     setIsError(false);
-    setMessage('Checking network...'); // Pesan loading baru
+    setMessage('Checking network...'); 
 
     try {
         const network = await provider.getNetwork();
         if (network.chainId.toString() !== parseInt(BASE_CHAIN_ID).toString()) {
             setMessage('Wrong network. Please switch to Base Mainnet.');
             setIsError(true);
-            await switchNetwork(provider); // Minta ganti
+            await switchNetwork(provider); 
             
-            // Cek lagi setelah ganti
             const newNetwork = await provider.getNetwork();
             if (newNetwork.chainId.toString() !== parseInt(BASE_CHAIN_ID).toString()) {
-                setIsLoading(false); // Stop loading
-                return; // Keluar jika masih salah
+                setIsLoading(false); 
+                return; 
             }
         }
     } catch (error) {
@@ -172,23 +172,23 @@ function App() {
         setIsLoading(false);
         return;
     }
-    // --- AKHIR DARI PENGECEKAN BARU ---
+    // --- End of network check ---
 
 
-    // Validasi min AND max bet
+    // Validate min AND max bet
     const cleanBetAmount = betAmount.replace(',', '.');
     const betAmountFloat = parseFloat(cleanBetAmount);
     
     if (isNaN(betAmountFloat) || betAmountFloat < MIN_BET_USDC) {
         setMessage(`Invalid bet. Minimum bet is ${MIN_BET_USDC} USDC.`);
         setIsError(true);
-        setIsLoading(false);
+        setIsLoading(false); 
         return;
     }
     if (betAmountFloat > MAX_BET_USDC) {
         setMessage(`Invalid bet. Maximum bet is ${MAX_BET_USDC} USDC.`);
         setIsError(true);
-        setIsLoading(false);
+        setIsLoading(false); 
         return;
     }
     // ---------------------------------
@@ -200,7 +200,7 @@ function App() {
       const usdcAddress = asset;
       const recipientAddress = payTo;
       
-      const value = ethers.parseUnits(cleanBetAmount, 6); // 6 desimal untuk USDC
+      const value = ethers.parseUnits(cleanBetAmount, 6); 
 
       const nonce = ethers.hexlify(ethers.randomBytes(32));
       const validAfter = Math.floor(Date.now() / 1000) - 60; 
@@ -264,6 +264,7 @@ function App() {
         throw new Error(result.error || `HTTP error! status: ${response.status}`);
       }
 
+      // (FIXED) Removed strange characters
       if (result.success && result.data.lucky) {
         setMessage(`🎉 CONGRATS! You won! ${ethers.formatUnits(result.data.payoutAmount, 6)} USDC sent.`);
         setIsError(false);
@@ -277,15 +278,15 @@ function App() {
     } catch (error) {
       console.error('x402flip error:', error);
       
-      // (FIX) Menangani error 'user rejected'
+      // (FIXED) Handle user rejection
       if (error.code === 4001 || error.code === 'ACTION_REJECTED') {
           setMessage('You rejected the signature request.');
       } 
-      // (FIX) Menangani 'invalid signature'
+      // (FIXED) Handle invalid signature
       else if (error.message.includes('invalid signature')) {
           setMessage('Error: Signature failed. Please check your network and try again.');
       } 
-      // Fallback untuk error lain
+      // Fallback for other errors
       else {
           if (error.message.length > 200) {
             setMessage('Error: An unknown error occurred.');
@@ -299,7 +300,7 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }; // This is the end of the handleFlipCoin function
 
   return (
     <div className="App">
