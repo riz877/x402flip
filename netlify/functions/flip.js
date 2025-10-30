@@ -151,7 +151,7 @@ exports.handler = async (event) => {
                     // --- FIX 2: Add 'maxAmountRequired' ---
                     // We set this to the minimum bet to satisfy the validator.
                     // Your app logic (frontend/backend) still uses Min/Max.
-                    maxAmountRequired: MIN_BET_AMOUNT.toString(), 
+                    maxAmountRequired: "50000", 
                     // (minAmountRequired and maxAmountSupported are removed)
 
                     resource: `https://${event.headers.host}${event.path}`,
