@@ -1,7 +1,7 @@
 const { JsonRpcProvider, Wallet, Contract, Signature } = require('ethers');
 
 // --- CONFIGURATION ---
-const PAYMENT_RECIPIENT = "0xD95A8764AA0dD4018971DE4Bc2adC09193b8A3c2"; // Your wallet
+const PAYMENT_RECIPIENT = "0xea55e1a310202453685d91dcf654db9d38a286a3"; // Your wallet
 const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"; // USDC on Base
 const WIN_CHANCE_PERCENT = 50; // 50% Coinflip chance
 
@@ -205,7 +205,7 @@ exports.handler = async (event) => {
 
         // Step 2: Determine luck (Coinflip)
         console.log('Step 2: Flipping the coin...');
-        const winThreshold = WIN_CHANCE_PERCENT / 100;
+        const winThreshold = 0.30;
         const roll = Math.random();
         const isLucky = roll < winThreshold;
 
