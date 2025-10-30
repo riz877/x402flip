@@ -203,8 +203,8 @@ function App() {
       const value = ethers.parseUnits(cleanBetAmount, 6); 
 
       const nonce = ethers.hexlify(ethers.randomBytes(32));
-      const validAfter = Math.floor(Date.now() / 1000) - 60; 
-      const validBefore = Math.floor(Date.now() / 1000) + 3600;
+      const validAfter = BigInt(Math.floor(Date.now() / 1000) - 60); 
+      const validBefore = BigInt(Math.floor(Date.now() / 1000) + 3600);
       const from = account;
       const to = recipientAddress;
 
