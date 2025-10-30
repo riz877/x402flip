@@ -213,6 +213,7 @@ function App() {
         version: '2',
         chainId: 8453,
         verifyingContract: usdcAddress,
+        salt: '0x0000000000000000000000000000000000000000000000000000000000000000',
       };
 
       const types = {
