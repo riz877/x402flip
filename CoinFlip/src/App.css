@@ -1,0 +1,250 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  width: 100%;
+}
+
+.window-container {
+  background-color: #000000; /* Black */
+  border: 4px solid #FFFFFF; /* White border */
+  box-shadow: 8px 8px #0000FF; /* Blue shadow */
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: #FFFFFF;
+  width: 500px;
+  max-width: 90vw;
+  box-sizing: border-box;
+  padding: 0; 
+}
+
+/* --- TITLE BAR STYLES --- */
+.window-title-bar {
+  background-color: #0000FF; /* Blue */
+  color: #FFFFFF; /* White */
+  padding: 6px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid #FFFFFF; /* White separator line */
+  font-size: 0.9rem;
+}
+
+.title-text {
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.window-controls {
+  display: flex;
+}
+
+.control-btn {
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 2px solid #000000;
+  padding: 2px 5px;
+  margin-left: 5px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  cursor: default;
+}
+
+/* --- CONTENT STYLES --- */
+.window-content {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.window-content h1 {
+  font-size: 1.5rem;
+  word-break: break-word;
+}
+
+.window-content p {
+  font-size: 0.9rem;
+  word-break: break-word;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* --- BUTTON & MESSAGE STYLES --- */
+.cta-button {
+  background-color: #0000FF; /* Blue */
+  color: #FFFFFF; /* White text */
+  font-size: 1rem;
+  font-weight: normal;
+  border: 2px solid #FFFFFF;
+  border-radius: 0;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.1s linear;
+  margin-top: 24px;
+  box-shadow: 4px 4px #000000;
+}
+
+.cta-button:hover {
+  background-color: #FFFFFF;
+  color: #0000FF;
+  border-color: #0000FF;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px #000000;
+}
+
+.cta-button:disabled {
+  background-color: #333333;
+  color: #666666;
+  border-color: #666666;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.message {
+  font-size: 0.8rem;
+  padding: 10px;
+  border-radius: 0;
+  margin-top: 20px;
+  width: 100%; /* Make it fill the container */
+  box-sizing: border-box; /* Include padding in width */
+  word-wrap: break-word;
+  border: 2px solid;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.message.error {
+  background-color: #000000;
+  color: #FF0000; /* Red text */
+  border-color: #FF0000;
+}
+
+.message.success {
+  background-color: #000000;
+  color: #00FF00; /* Green text */
+  border-color: #00FF00;
+}
+
+/* --- COIN ANIMATION --- */
+.coin-container {
+  height: 80px;
+  margin-top: 20px;
+  perspective: 200px;
+}
+
+.coin {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  border: 4px solid #0000FF;
+  box-sizing: border-box;
+  animation: flip 1s infinite steps(2, jump-none);
+  position: relative;
+  transform-style: preserve-3d;
+  font-size: 0;
+  overflow: hidden;
+}
+
+.coin::before {
+  content: 'C';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 36px;
+  font-weight: bold;
+  color: #0000FF;
+  text-shadow: 2px 2px #FFFFFF;
+}
+
+@keyframes flip {
+  0% { transform: rotateY(0deg); }
+  25% { transform: rotateY(90deg); }
+  50% { transform: rotateY(180deg); }
+  75% { transform: rotateY(270deg); }
+  100% { transform: rotateY(360deg); }
+}
+.flip-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+  text-align: left;
+  width: 80%;
+}
+
+.bet-input {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  background-color: #000000;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  padding: 10px;
+  width: 80%;
+  box-sizing: border-box; /* Ensures padding doesn't break layout */
+  border-radius: 0;
+  text-align: center;
+}
+
+.bet-input:focus {
+  outline: none;
+  border-color: #0000FF;
+  box-shadow: 0 0 10px #0000FF;
+}
+
+.cta-button {
+  /* Make button width match the input field */
+  width: calc(80% + 4px); /* Matches input width + borders */
+  box-sizing: border-box;
+}
+/* ... (ALL YOUR PREVIOUS CSS) ... */
+
+/* --- ADD THIS CSS AT THE BOTTOM --- */
+
+.social-links {
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #333; /* Separator line */
+  padding-top: 20px;
+}
+
+.social-icon {
+  color: #FFFFFF; /* White */
+  text-decoration: none;
+  transition: all 0.1s linear;
+}
+
+.social-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.social-icon:hover {
+  color: #0000FF; /* Blue on hover */
+  transform: scale(1.1);
+}
