@@ -147,7 +147,7 @@ function App() {
       return;
     }
 
-    // (BARU) Tambahkan pengecekan jaringan di sini
+    // (FIX) Tambahkan pengecekan jaringan di sini
     setIsLoading(true);
     setIsError(false);
     setMessage('Checking network...'); // Pesan loading baru
@@ -175,26 +175,24 @@ function App() {
     // --- AKHIR DARI PENGECEKAN BARU ---
 
 
-    // (DIUBAH) Validasi min AND max bet
-    // (Pindahkan validasi ini setelah pengecekan jaringan)
+    // Validasi min AND max bet
     const cleanBetAmount = betAmount.replace(',', '.');
     const betAmountFloat = parseFloat(cleanBetAmount);
     
     if (isNaN(betAmountFloat) || betAmountFloat < MIN_BET_USDC) {
         setMessage(`Invalid bet. Minimum bet is ${MIN_BET_USDC} USDC.`);
         setIsError(true);
-        setIsLoading(false); // (BARU) Stop loading
+        setIsLoading(false);
         return;
     }
     if (betAmountFloat > MAX_BET_USDC) {
         setMessage(`Invalid bet. Maximum bet is ${MAX_BET_USDC} USDC.`);
         setIsError(true);
-        setIsLoading(false); // (BARU) Stop loading
+        setIsLoading(false);
         return;
     }
     // ---------------------------------
 
-    // Hapus setIsLoading(true) dan setIsError(false) dari sini, sudah dipindah ke atas
     setMessage('Preparing signature...');
 
     try {
@@ -279,20 +277,16 @@ function App() {
     } catch (error) {
       console.error('x402flip error:', error);
       
-      // --- NEW FIX ---
-      // Check if the user clicked "Reject" (code 4001 or 'ACTION_REJECTED')
+      // (FIX) Menangani error 'user rejected'
       if (error.code === 4001 || error.code === 'ACTION_REJECTED') {
           setMessage('You rejected the signature request.');
       } 
-      // --- END NEW FIX ---
-
-      // Check for the invalid signature error from our previous fix
+      // (FIX) Menangani 'invalid signature'
       else if (error.message.includes('invalid signature')) {
-          setMessage('Error: Signature failed. Please try again.');
+          setMessage('Error: Signature failed. Please check your network and try again.');
       } 
-      // Fallback for all other errors
+      // Fallback untuk error lain
       else {
-          // Hide long JSON errors from the user
           if (error.message.length > 200) {
             setMessage('Error: An unknown error occurred.');
           } else {
@@ -305,7 +299,7 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-  }; // This is the end of the handleFlipCoin function
+  };
 
   return (
     <div className="App">
