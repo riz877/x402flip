@@ -278,17 +278,34 @@ function App() {
 
     } catch (error) {
       console.error('x402flip error:', error);
-      // Jangan tampilkan 'invalid signature' ke user, ganti dengan pesan yang lebih jelas
-      if (error.message.includes('invalid signature')) {
+      
+      // --- NEW FIX ---
+      // Check if the user clicked "Reject" (code 4001 or 'ACTION_REJECTED')
+      if (error.code === 4001 || error.code === 'ACTION_REJECTED') {
+          setMessage('You rejected the signature request.');
+      } 
+      // --- END NEW FIX ---
+
+      // Check for the invalid signature error from our previous fix
+      else if (error.message.includes('invalid signature')) {
           setMessage('Error: Signature failed. Please try again.');
-      } else {
-          setMessage(`Error: ${error.message || 'Transaction failed.'}`);
+      } 
+      // Fallback for all other errors
+      else {
+          // Hide long JSON errors from the user
+          if (error.message.length > 200) {
+            setMessage('Error: An unknown error occurred.');
+          } else {
+            setMessage(`Error: ${error.message || 'Transaction failed.'}`);
+          }
       }
+      
       setIsError(true);
+
     } finally {
       setIsLoading(false);
     }
-  };
+  }; // This is the end of the handleFlipCoin function
 
   return (
     <div className="App">
