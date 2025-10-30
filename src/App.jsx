@@ -203,15 +203,15 @@ function App() {
       const value = ethers.parseUnits(cleanBetAmount, 6); 
 
       const nonce = ethers.hexlify(ethers.randomBytes(32));
-      const validAfter = BigInt(Math.floor(Date.now() / 1000) - 60); 
-      const validBefore = BigInt(Math.floor(Date.now() / 1000) + 3600);
-
-      // ... lewati beberapa baris
+      const validAfter = Math.floor(Date.now() / 1000) - 60; 
+      const validBefore = Math.floor(Date.now() / 1000) + 3600;
+      const from = account;
+      const to = recipientAddress;
 
       const domain = {
-        name: 'USD Coin',   // INI YANG BENAR (dari file nft_mint.js Anda)
-        version: '2',         // INI YANG BENAR (dari file nft_mint.js Anda)
-        chainId: 8453,      // INI YANG BENAR (angka, bukan string)
+        name: 'USD Coin',
+        version: '2',
+        chainId: 8453,
         verifyingContract: usdcAddress,
       };
 
