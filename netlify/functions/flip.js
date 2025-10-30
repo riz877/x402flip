@@ -151,15 +151,16 @@ exports.handler = async (event) => {
                 error: "Payment Required",
                 message: `Pay minimum ${minBetFormatted} USDC to flip a coin`,
                 accepts: [{
+                    name: "x402flip | Coinflip on x402",
                     scheme: "variable", 
                     network: "base",
                     minAmountRequired: MIN_BET_AMOUNT.toString(), 
                     maxAmountSupported: MAX_BET_AMOUNT.toString(), // (NEW)
                     resource: `https://${event.headers.host}${event.path}`,
                     // (CHANGED) Updated description
-                    description: `Flip a coin for a 2x USDC prize. ${WIN_CHANCE_PERCENT}% chance! (Min: ${minBetFormatted}, Max: ${maxBetFormatted} USDC)`,
+                    description: `Flip it or leave it. x402 decides. ${WIN_CHANCE_PERCENT}% chance! (Min: ${minBetFormatted}, Max: ${maxBetFormatted} USDC)`,
                     mimeType: "application/json",
-                    image: "https://raw.githubusercontent.com/riz877/pic/refs/heads/main/G4SIxPcXEAAuo7O.jpg",
+                    image: "https://raw.githubusercontent.com/riz877/x402/refs/heads/main/fav.png",
                     payTo: PAYMENT_RECIPIENT,
                     asset: USDC_ADDRESS,
                     maxTimeoutSeconds: 3600,
