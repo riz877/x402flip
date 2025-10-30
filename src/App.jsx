@@ -209,8 +209,8 @@ function App() {
       const to = recipientAddress;
 
       const domain = {
-        name: 'FiatTokenV2',
-        version: '2',
+        name: 'USD Coin',
+        version: '1',
         chainId: 8453,
         verifyingContract: usdcAddress,
       };
