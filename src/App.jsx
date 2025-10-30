@@ -147,33 +147,62 @@ function App() {
       return;
     }
 
-    // (FIXED) Add comma replacement for user input
+    // (BARU) Tambahkan pengecekan jaringan di sini
+    setIsLoading(true);
+    setIsError(false);
+    setMessage('Checking network...'); // Pesan loading baru
+
+    try {
+        const network = await provider.getNetwork();
+        if (network.chainId.toString() !== parseInt(BASE_CHAIN_ID).toString()) {
+            setMessage('Wrong network. Please switch to Base Mainnet.');
+            setIsError(true);
+            await switchNetwork(provider); // Minta ganti
+            
+            // Cek lagi setelah ganti
+            const newNetwork = await provider.getNetwork();
+            if (newNetwork.chainId.toString() !== parseInt(BASE_CHAIN_ID).toString()) {
+                setIsLoading(false); // Stop loading
+                return; // Keluar jika masih salah
+            }
+        }
+    } catch (error) {
+        setMessage(`Network check failed: ${error.message}`);
+        setIsError(true);
+        setIsLoading(false);
+        return;
+    }
+    // --- AKHIR DARI PENGECEKAN BARU ---
+
+
+    // (DIUBAH) Validasi min AND max bet
+    // (Pindahkan validasi ini setelah pengecekan jaringan)
     const cleanBetAmount = betAmount.replace(',', '.');
     const betAmountFloat = parseFloat(cleanBetAmount);
     
     if (isNaN(betAmountFloat) || betAmountFloat < MIN_BET_USDC) {
         setMessage(`Invalid bet. Minimum bet is ${MIN_BET_USDC} USDC.`);
         setIsError(true);
+        setIsLoading(false); // (BARU) Stop loading
         return;
     }
     if (betAmountFloat > MAX_BET_USDC) {
         setMessage(`Invalid bet. Maximum bet is ${MAX_BET_USDC} USDC.`);
         setIsError(true);
+        setIsLoading(false); // (BARU) Stop loading
         return;
     }
     // ---------------------------------
 
-    setIsLoading(true);
+    // Hapus setIsLoading(true) dan setIsError(false) dari sini, sudah dipindah ke atas
     setMessage('Preparing signature...');
-    setIsError(false);
 
     try {
       const { payTo, asset } = paymentInfo;
       const usdcAddress = asset;
       const recipientAddress = payTo;
       
-      // (FIXED) Use the clean value for parsing
-      const value = ethers.parseUnits(cleanBetAmount, 6); // 6 decimals for USDC
+      const value = ethers.parseUnits(cleanBetAmount, 6); // 6 desimal untuk USDC
 
       const nonce = ethers.hexlify(ethers.randomBytes(32));
       const validAfter = Math.floor(Date.now() / 1000) - 60; 
@@ -237,7 +266,6 @@ function App() {
         throw new Error(result.error || `HTTP error! status: ${response.status}`);
       }
 
-      // (FIXED) Removed strange characters from messages
       if (result.success && result.data.lucky) {
         setMessage(`🎉 CONGRATS! You won! ${ethers.formatUnits(result.data.payoutAmount, 6)} USDC sent.`);
         setIsError(false);
@@ -250,7 +278,12 @@ function App() {
 
     } catch (error) {
       console.error('x402flip error:', error);
-      setMessage(`Error: ${error.message || 'Transaction failed.'}`);
+      // Jangan tampilkan 'invalid signature' ke user, ganti dengan pesan yang lebih jelas
+      if (error.message.includes('invalid signature')) {
+          setMessage('Error: Signature failed. Please try again.');
+      } else {
+          setMessage(`Error: ${error.message || 'Transaction failed.'}`);
+      }
       setIsError(true);
     } finally {
       setIsLoading(false);
