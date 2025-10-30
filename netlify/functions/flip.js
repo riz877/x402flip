@@ -156,7 +156,7 @@ exports.handler = async (event) => {
                     // (minAmountRequired and maxAmountSupported are removed)
 
                     resource: `https://${event.headers.host}${event.path}`,
-                    description: `Flip it or leave it. x402 decides. ${WIN_CHANCE_PERCENT}% chance! (Min: ${minBetFormatted}, Max: ${maxBetFormatted} USDC)`,
+                    description: `${WIN_CHANCE_PERCENT}% chance! (Min: ${minBetFormatted}, Max: ${maxBetFormatted} USDC)`,
                     mimeType: "application/json",
                     image: "https://raw.githubusercontent.com/riz877/x402/refs/heads/main/fav.png",
                     payTo: PAYMENT_RECIPIENT,
