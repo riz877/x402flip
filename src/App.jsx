@@ -272,8 +272,8 @@ function App() {
         </div>
 
         <div className="window-content">
-          <h1>x402flip 2x USDC</h1>
-          <p>Bet between {MIN_BET_USDC} and {MAX_BET_USDC} USDC to win 2x!</p>
+          <h1>x402flip</h1>
+          <p>Flip it or leave it. x402 decides.</p>
 
           {isLoading && (
             <div className="coin-container">
