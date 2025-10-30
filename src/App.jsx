@@ -11,7 +11,7 @@ const BACKEND_URL = '/api/flip';
 // Base Mainnet Network Info
 const BASE_CHAIN_ID = '0x2105'; // 8453
 const BASE_NETWORK_INFO = {
-  chainId: BASE_CHAIN_ID,
+  chainId: 8453,
   chainName: 'Base Mainnet',
   nativeCurrency: { name: 'Ethereum', symbol: 'ETH', decimals: 18 },
   rpcUrls: ['https://mainnet.base.org'],
@@ -211,7 +211,7 @@ function App() {
       const domain = {
         name: 'USD Coin',
         version: '2',
-        chainId: BASE_CHAIN_ID,
+        chainId: 8453,
         verifyingContract: usdcAddress,
       };
 
