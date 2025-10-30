@@ -7,7 +7,7 @@ const WIN_CHANCE_PERCENT = 50; // 50% Coinflip chance
 
 // (CHANGED) Define minimum and maximum bet amounts
 // 5000n = 0.05 USDC
-const MIN_BET_AMOUNT = 5000n; 
+const MIN_BET_AMOUNT = 50000n; 
 // 1000000000n = 1000 USDC (6 decimals)
 const MAX_BET_AMOUNT = 1000000000n; 
 
