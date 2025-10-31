@@ -37,7 +37,7 @@ function App() {
   
   // Set your app's URL for the share link
   const APP_URL = "https://x402flip.xyz";
-  const TWITTER_SHARE_TEXT = "I just play coinflip on x402! Try your luck!";
+  const TWITTER_SHARE_TEXT = "I just play coinflip on x402! Try your luck! by @sanukek";
 
   // 1. Try to connect wallet on page load
   useEffect(() => {
